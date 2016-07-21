@@ -1,0 +1,12 @@
+Basic Idea: Users should be able to create a team and set available times, and then a match (best of 3) should be emailed to them when available.
+
+Users can list their alts under there account
+Users can belong to multiple teams
+Users select available times (hour blocks probably, half hour at smallest), all separate times jammed into big table
+Look for collisions with 3 hours gap (enough for 3 games, because best of 3)
+Store some data about completed matches
+Verify league name by naming rune page/mastery page and checking API
+
+
+Problems:
+League Names may change ownership. Not sure how to account here unless Riot provides a unique id of some sort
