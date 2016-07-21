@@ -25,7 +25,13 @@ class Team(models.Model):
     team_karma = models.DecimalField()
 
 
-class TeamMembers(models.Model):
+class TeamToLeagueName(models.Model):
+    username_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    league_name_id = models.ForeignKey(LeagueName, on_delete=models.CASCADE)
+    team_id = models.ForeignKey(Team, on_delete=models.CASCADE)
+
+
+class TeamMember(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
 
@@ -39,6 +45,12 @@ class FutureMatch(models.Model):
     side = models.CharField(max_length=1)
 
 
+class TimeAvaliable(models.Model):
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    team_id = models.ForeignKey(Team)
+
+
 class CompletedMatch(models.Model):
     match_date = models.DateTimeField()
     # Allow matches to exist in history even if team is deleted
@@ -46,3 +58,15 @@ class CompletedMatch(models.Model):
     team_2 = models.ForeignKey(Team, db_constraint=False)
     # Which side was red to begin
     starting_team = models.ForeignKey(Team, db_constraint=False)
+    gold_1 = models.DecimalField()
+    gold_2 = models.DecimalField()
+    dragon_1 = models.SmallIntegerField()
+    dragon_2 = models.SmallIntegerField()
+    baron_1 = models.SmallIntegerField()
+    baron_2 = models.SmallIntegerField()
+    tower_1 = models.SmallIntegerField()
+    tower_2 = models.SmallIntegerField()
+    kills_1 = models.SmallIntegerField()
+    kills_2 = models.SmallIntegerField()
+    elo_changed_1 = models.SmallIntegerField()
+    elo_changed_2 = models.SmallIntegerField()
