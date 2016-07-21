@@ -6,7 +6,7 @@ from league_sched.serializers import UserSerializer
 
 
 @api_view(['GET', 'POST'])
-def user_list(request):
+def user_list(request, format=None):
     if request.method == 'GET':
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
@@ -21,7 +21,7 @@ def user_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def user_detail(request, pk):
+def user_detail(request, pk, format=None):
     """
     Retrieve, update or delete a user instance.
     """
