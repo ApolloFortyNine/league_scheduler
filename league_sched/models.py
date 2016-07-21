@@ -6,7 +6,7 @@ class User(models.Model):
     username = models.CharField(max_length=30)
     sign_up_date = models.DateTimeField()
     password = models.CharField(max_length=64)
-    karma = models.DecimalField()
+    karma = models.DecimalField(max_digits=5, decimal_places=5)
 
 
 class LeagueName(models.Model):
@@ -20,9 +20,9 @@ class Team(models.Model):
     name = models.CharField(max_length=50)
     tag = models.CharField(max_length=5)
     # Probably has to be stored separately (RD and actual rating)
-    rating = models.DecimalField()
+    rating = models.DecimalField(max_digits=8, decimal_places=8)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    team_karma = models.DecimalField()
+    team_karma = models.DecimalField(max_digits=5, decimal_places=5)
 
 
 class TeamToLeagueName(models.Model):
@@ -39,13 +39,13 @@ class TeamMember(models.Model):
 class FutureMatch(models.Model):
     match_date = models.DateTimeField()
     # Probably shouldn't allow people to delete teams if one is planned. Than delete and inform manually
-    team_1 = models.ForeignKey(Team)
-    team_2 = models.ForeignKey(Team)
+    team_1 = models.ForeignKey(Team, related_name="futurematch_team_1")
+    team_2 = models.ForeignKey(Team, related_name="futurematch_team_2")
     # "R" or "B"
     side = models.CharField(max_length=1)
 
 
-class TimeAvaliable(models.Model):
+class AvailableTime(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     team_id = models.ForeignKey(Team)
@@ -54,12 +54,12 @@ class TimeAvaliable(models.Model):
 class CompletedMatch(models.Model):
     match_date = models.DateTimeField()
     # Allow matches to exist in history even if team is deleted
-    team_1 = models.ForeignKey(Team, db_constraint=False)
-    team_2 = models.ForeignKey(Team, db_constraint=False)
+    team_1 = models.ForeignKey(Team, related_name="completedmatch_team_1", db_constraint=False)
+    team_2 = models.ForeignKey(Team, related_name="completedmatch_team_2", db_constraint=False)
     # Which side was red to begin
-    starting_team = models.ForeignKey(Team, db_constraint=False)
-    gold_1 = models.DecimalField()
-    gold_2 = models.DecimalField()
+    starting_team = models.ForeignKey(Team, related_name="completedmatch_starting_team", db_constraint=False)
+    gold_1 = models.IntegerField()
+    gold_2 = models.IntegerField()
     dragon_1 = models.SmallIntegerField()
     dragon_2 = models.SmallIntegerField()
     baron_1 = models.SmallIntegerField()
