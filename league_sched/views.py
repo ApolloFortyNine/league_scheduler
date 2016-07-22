@@ -44,3 +44,8 @@ def user_detail(request, pk, format=None):
     elif request.method == 'DELETE':
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET', 'POST', 'PUT', 'DELETE'])
+def league_name_detail(request, pk, format=None):
+    pass

@@ -1,6 +1,6 @@
 # from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from league_sched.models import User
+from league_sched.models import User, LeagueName
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -21,3 +21,9 @@ class UserSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
+
+
+class LeagueNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LeagueName
+        fields = '__all__'
