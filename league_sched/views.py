@@ -1,10 +1,14 @@
 from rest_framework import status, generics, mixins
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from league_sched.models import User, LeagueName
-from league_sched.serializers import UserSerializer, LeagueNameSerializer
+from league_sched.models import User, LeagueName, Team, TeamMember, FutureMatch
+from league_sched.models import AvailableTime, CompletedMatch
+from league_sched.serializers import UserSerializer, LeagueNameSerializer, TeamSerializer
+from league_sched.serializers import TeamMemberSerializer, FutureMatchSerializer
+from league_sched.serializers import AvailableTimeSerializer, CompletedMatchSerializer
 
 
+# TODO Change generic lists to either limit return or to only create
 ###########################
 # The graveyard belows serves as a reminder as to why you should always read
 # the entire tutorial before starting a project
@@ -107,3 +111,40 @@ class LeagueNameDetail(generics.RetrieveUpdateDestroyAPIView,
                        generics.CreateAPIView):
     queryset = LeagueName.objects.all()
     serializer_class = LeagueNameSerializer
+
+
+# TODO Create a different endpoint to see top X teams
+class TeamDetail(generics.RetrieveUpdateDestroyAPIView,
+                 generics.CreateAPIView):
+    queryset = Team.objects.all()
+    serializer_class = TeamSerializer
+
+
+# class TeamToUsernameDetail(generics.RetrieveUpdateDestroyAPIView,
+#                            generics.CreateAPIView):
+#     queryset = TeamToUsername
+#     serializer_class = TeamToUsernameSerializer
+
+
+class TeamMemberDetail(generics.RetrieveUpdateDestroyAPIView,
+                       generics.CreateAPIView):
+    queryset = TeamMember
+    serializer_class = TeamMemberSerializer
+
+
+class FutureMatchDetail(generics.RetrieveUpdateDestroyAPIView,
+                        generics.CreateAPIView):
+    queryset = FutureMatch
+    serializer_class = FutureMatchSerializer
+
+
+class AvailableTimeDetail(generics.RetrieveUpdateDestroyAPIView,
+                          generics.CreateAPIView):
+    queryset = AvailableTime
+    serializer_class = AvailableTimeSerializer
+
+
+class CompletedMatchDetail(generics.RetrieveUpdateDestroyAPIView,
+                     generics.CreateAPIView):
+    queryset = CompletedMatch
+    serializer_class = CompletedMatchSerializer

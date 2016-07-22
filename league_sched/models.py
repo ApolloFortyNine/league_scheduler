@@ -6,7 +6,7 @@ class User(models.Model):
     username = models.CharField(max_length=30)
     sign_up_date = models.DateTimeField()
     password = models.CharField(max_length=64)
-    karma = models.DecimalField(max_digits=5, decimal_places=5)
+    karma = models.DecimalField(max_digits=10, decimal_places=3)
 
 
 class LeagueName(models.Model):
@@ -20,15 +20,15 @@ class Team(models.Model):
     name = models.CharField(max_length=50)
     tag = models.CharField(max_length=5)
     # Probably has to be stored separately (RD and actual rating)
-    rating = models.DecimalField(max_digits=8, decimal_places=8)
+    rating = models.DecimalField(max_digits=14, decimal_places=5)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    team_karma = models.DecimalField(max_digits=5, decimal_places=5)
+    team_karma = models.DecimalField(max_digits=10, decimal_places=3)
 
 
-class TeamToLeagueName(models.Model):
-    username_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    league_name_id = models.ForeignKey(LeagueName, on_delete=models.CASCADE)
-    team_id = models.ForeignKey(Team, on_delete=models.CASCADE)
+# class TeamToUsername(models.Model):
+#     username_id = models.ForeignKey(User, on_delete=models.CASCADE)
+#     league_name_id = models.ForeignKey(LeagueName, on_delete=models.CASCADE)
+#     team_id = models.ForeignKey(Team, on_delete=models.CASCADE)
 
 
 class TeamMember(models.Model):

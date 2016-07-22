@@ -1,6 +1,7 @@
 # from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from league_sched.models import User, LeagueName, Team
+from league_sched.models import User, LeagueName, Team, TeamMember
+from league_sched.models import FutureMatch, AvailableTime, CompletedMatch
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -32,4 +33,34 @@ class LeagueNameSerializer(serializers.ModelSerializer):
 class TeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
+        fields = '__all__'
+
+
+# class TeamToUsernameSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = TeamToUsername
+#         fields = '__all__'
+
+
+class TeamMemberSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TeamMember
+        fields = '__all__'
+
+
+class FutureMatchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FutureMatch
+        fields = '__all__'
+
+
+class AvailableTimeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AvailableTime
+        fields = '__all__'
+
+
+class CompletedMatchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CompletedMatch
         fields = '__all__'
