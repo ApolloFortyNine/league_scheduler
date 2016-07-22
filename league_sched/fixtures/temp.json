@@ -1,0 +1,22 @@
+[
+  {
+    "model": "league_sched.User",
+    "pk": 1,
+    "fields": {
+      "username": "ayyy",
+      "sign_up_date": "1999-12-11 05:22",
+      "password": "password123",
+      "karma": 4
+    }
+  },
+  {
+    "model": "league_sched.User",
+    "pk": 2,
+    "fields": {
+      "username": "bernie_sanders",
+      "sign_up_date": "",
+      "password": "god_im_old",
+      "karma": -5
+    }
+  }
+]
