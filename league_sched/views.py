@@ -1,8 +1,8 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from league_sched.models import User
-from league_sched.serializers import UserSerializer
+from league_sched.models import User, LeagueName
+from league_sched.serializers import UserSerializer, LeagueNameSerializer
 
 
 @api_view(['GET', 'POST'])
@@ -48,4 +48,31 @@ def user_detail(request, pk, format=None):
 
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
 def league_name_detail(request, pk, format=None):
-    pass
+    if request.method == 'POST':
+        serializer = LeagueNameSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        league_name = LeagueName.objects.get(pk=pk)
+    except LeagueName.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        league_name = LeagueName.objects.get(pk=pk)
+        serializer = LeagueNameSerializer(league_name)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = LeagueNameSerializer(league_name, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        league_name.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
