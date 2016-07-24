@@ -7,8 +7,6 @@ class User(models.Model):
     sign_up_date = models.DateTimeField()
     password = models.CharField(max_length=64)
     karma = models.DecimalField(max_digits=10, decimal_places=3)
-    class Meta:
-        app_label='league_sched'
 
 
 class LeagueName(models.Model):
@@ -16,8 +14,6 @@ class LeagueName(models.Model):
     # Check if unique id is given so we don't have to worry about name changes (someone else owning the name)
     league_name = models.CharField(max_length=30)
     verified = models.BooleanField(default=0)
-    class Meta:
-        app_label='league_sched'
 
 
 class Team(models.Model):
@@ -27,15 +23,11 @@ class Team(models.Model):
     rating = models.DecimalField(max_digits=14, decimal_places=5)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     team_karma = models.DecimalField(max_digits=10, decimal_places=3)
-    class Meta:
-        app_label='league_sched'
 
 
 class TeamMember(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
-    class Meta:
-        app_label='league_sched'
 
 
 class FutureMatch(models.Model):
@@ -45,16 +37,12 @@ class FutureMatch(models.Model):
     team_2 = models.ForeignKey(Team, related_name="futurematch_team_2")
     # "R" or "B"
     side = models.CharField(max_length=1)
-    class Meta:
-        app_label='league_sched'
 
 
 class AvailableTime(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     team_id = models.ForeignKey(Team)
-    class Meta:
-        app_label='league_sched'
 
 
 class CompletedMatch(models.Model):
@@ -76,5 +64,3 @@ class CompletedMatch(models.Model):
     kills_2 = models.SmallIntegerField()
     elo_changed_1 = models.SmallIntegerField()
     elo_changed_2 = models.SmallIntegerField()
-    class Meta:
-        app_label='league_sched'
