@@ -1,55 +1,57 @@
 import random
-import json
-import time
+from random import randrange
 import string
 import datetime
-import pytz
+import os
+from datetime import timedelta
 
-def strTimeProp(start, end, format, prop):
-    """Get a time at a proportion of a range of two formatted times.
-
-    start and end should be strings specifying times formated in the
-    given format (strftime-style), giving an interval [start, end].
-    prop specifies how a proportion of the interval to be taken after
-    start.  The returned time will be in the specified format.
-    """
-
-    stime = time.mktime(time.strptime(start, format))
-    etime = time.mktime(time.strptime(end, format))
-
-    ptime = stime + prop * (etime - stime)
-
-    str(datetime.datetime.now(datetime.timezone.utc))
-    return time.strftime(format, time.localtime(ptime))
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "league_scheduler.settings")
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
+from league_sched import models
 
 
-def randomDate(start, end, prop):
-    return strTimeProp(start, end, '%m/%d/%Y %I:%M %p', prop)
+# models.User.objects.all().delete()
+# quit()
+
+def randDatetime():
+    secondsInAWeek = 604800
+    startTime = datetime.datetime.now(datetime.timezone.utc)
+    endTime = datetime.datetime.now(datetime.timezone.utc) + timedelta(seconds=secondsInAWeek)
+
+    delta = endTime - startTime
+    int_delta = (delta.days * 24 * 60 * 60) + delta.seconds
+    random_second = randrange(int_delta)
+
+    randTime = startTime + timedelta(seconds=random_second)
+    print(randTime)
+    return randTime
 
 
 
 
-def randomUser(pkUser):
+def randomUser():
     newUser = {}
     newUser['username'] = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(15))
-    newUser['sign_up_date'] = str(datetime.datetime.now(datetime.timezone.utc))
+    newUser['sign_up_date'] = str(randDatetime())
     newUser['password'] = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(7))
     newUser['karma'] = round(random.random()*10)
 
-    modelObj = {}
-    modelObj['model'] = "league_sched.User"
-    modelObj['pk'] = pkUser
-    modelObj['fields'] = newUser
-
-    pkUser += 1
-    return modelObj
+    models.User.objects.create(username=newUser['username'], sign_up_date=newUser['sign_up_date'], password=newUser['password'], karma=newUser['karma'])
 
 
-numUsers = 10
-randUsers = []
-for x in range(1, numUsers+1):
-    randUsers.append(randomUser(x))
+def randomUser():
+    newUser = {}
+    newUser['username'] = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(15))
+    newUser['sign_up_date'] = str(randDatetime())
+    newUser['password'] = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(7))
+    newUser['karma'] = round(random.random()*10)
+
+    models.User.objects.create(username=newUser['username'], sign_up_date=newUser['sign_up_date'], password=newUser['password'], karma=newUser['karma'])
 
 
-with open('data.json', 'w') as outfile:
-    json.dump(randUsers, outfile)
+numTeams = 400
+for x in range(0, numTeams):
+    for y in range(0, 5):
+        randomUser()
+    randomTeams()
