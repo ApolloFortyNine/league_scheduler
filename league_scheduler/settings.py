@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'league_sched',
     'rest_framework',
+    'django.contrib.sites',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -88,7 +89,7 @@ DATABASES = {
         'USER': 'leaguepguser',
         'PASSWORD': 'testing1',
         'HOST': '107.191.101.205',
-        'PORT': '5432',
+        'PORT': '5432'
     }
 }
 

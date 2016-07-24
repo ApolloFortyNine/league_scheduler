@@ -1,0 +1,1 @@
+default_app_config = 'league_sched.apps.LeagueSchedConfig'
